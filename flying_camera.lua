@@ -1,16 +1,16 @@
 local function get_look_vector(yaw,pitch)
     return c3d.vector.new(
-        -math.sin(yaw)*math.cos(pitch),
+        math.sin(yaw)*math.cos(pitch),
         math.sin(pitch),
-        -math.cos(yaw)*math.cos(pitch)
+        math.cos(yaw)*math.cos(pitch)
     ):normalize()
 end
 
 local function get_move_vector(yaw)
     return c3d.vector.new(
-        -math.sin(yaw),
+        math.sin(yaw),
         0,
-        -math.cos(yaw)
+        math.cos(yaw)
     ):normalize()
 end
 
@@ -30,12 +30,12 @@ function c3d.update(dt)
     if c3d.keyboard.is_down("left") then yaw = yaw - 100*dt end
     if c3d.keyboard.is_down("right") then yaw = yaw + 100*dt end
     if c3d.keyboard.is_down("up") then
-        local new_pitch = pitch - 100*dt
-        if new_pitch > pitch_lim[1] then pitch = new_pitch end
-    end
-    if c3d.keyboard.is_down("down") then
         local new_pitch = pitch + 100*dt
         if new_pitch < pitch_lim[2] then pitch = new_pitch end
+    end
+    if c3d.keyboard.is_down("down") then
+        local new_pitch = pitch - 100*dt
+        if new_pitch > pitch_lim[1] then pitch = new_pitch end
     end
 
     local move_vector = get_move_vector(math.rad(yaw))
